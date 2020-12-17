@@ -13,42 +13,49 @@ import java.io.File;
 
 
 public class Window {
-    JLabel hero=new JLabel();
+    JLabel pacmanLabel = new JLabel();
     ImageIcon image;
     Clip clip;
-boolean kapcsolo=true;
+    int pacccing = 0;            //opening and closing the mouth
+    Ghost g1;
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-        JFrame f = new JFrame();
+        Pacman pacman = new Pacman();
+
+
+        JFrame frame = new JFrame();
 
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
-        f.setIconImage(img.getImage());
-
-
-
-
+        frame.setIconImage(img.getImage());
 
         playSound("pacman_beginning.WAV");    //plays starting music
         image = new ImageIcon("pac_right.png");
 
-        hero.setHorizontalAlignment(10);
-        hero = (new JLabel(image));
-        f.setLayout(null);
-        f.add(hero);
-        hero.setSize(48, 48);
-        hero.setLocation(0, 0);
+        pacmanLabel.setHorizontalAlignment(10);
+        pacmanLabel = (new JLabel(image));
+        frame.setLayout(null);
+        frame.add(pacmanLabel);
 
 
-        f.setSize(800, 600);
-        f.setResizable(false);
-        f.setTitle("PACMAN");
-        f.setLocationRelativeTo(null);
-        f.getContentPane().setBackground(new Color(4,5,42));
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
+        Ghost g1=new Ghost();
+        frame.add(g1);
 
 
-        f.addKeyListener(new KeyListener() {
+
+        pacmanLabel.setSize(50, 50);
+        pacmanLabel.setLocation(0, 0);
+
+
+        frame.setSize(800, 600);
+        frame.setResizable(false);
+        frame.setTitle("PACMAN");
+        frame.setLocationRelativeTo(null);
+        frame.getContentPane().setBackground(new Color(4, 5, 42));
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
+
+
+        frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -63,41 +70,62 @@ boolean kapcsolo=true;
                     switch (e.getKeyCode()) {
 
                         case 37:       //balra nyil kodja
-                            hero.setLocation(hero.getX() - 5, hero.getY());     //balra mozgatja
-                            image.setImage(new ImageIcon("pac_left.png").getImage());
+                            pacmanLabel.setLocation(pacmanLabel.getX() - 5, pacmanLabel.getY());     //moving and turning towards to west
+                            if (pacccing <= 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Left()).getImage());
+                                pacccing++;
+                            } else if (pacccing > 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
+                                pacccing++;
+                                if (pacccing == 10)
+                                    pacccing = 0;
+                            }
                             break;
 
-
                         case 38:       //fel nyil kodja
-                            hero.setLocation(hero.getX(), hero.getY() - 5);     //fel mozgatja
-                            image.setImage(new ImageIcon("pac_up.png").getImage());
+                            pacmanLabel.setLocation(pacmanLabel.getX(), pacmanLabel.getY() - 5);     //moving and turning towards to north
+                            if (pacccing <= 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Up()).getImage());
+                                pacccing++;
+                            } else if (pacccing > 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
+                                pacccing++;
+                                if (pacccing == 10)
+                                    pacccing = 0;
+                            }
                             break;
 
 
                         case 39:       //jobb nyil kodja
-                            hero.setLocation(hero.getX() + 5, hero.getY());     //jobbra mozgatja
-                            if (kapcsolo){
-                                image.setImage(new ImageIcon("pac_right.png").getImage());
-                                kapcsolo=false;
+                            pacmanLabel.setLocation(pacmanLabel.getX() + 5, pacmanLabel.getY());     //moving east
+                            if (pacccing <= 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Right()).getImage());
+                                pacccing++;
+                            } else if (pacccing > 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
+                                pacccing++;
+                                if (pacccing == 10)
+                                    pacccing = 0;
                             }
-                            else{
-                                image.setImage(new ImageIcon("pac_full.png").getImage());
-                                kapcsolo=true;
-                            }
-
-
                             break;
 
-                        case 40:
-                            hero.setLocation(hero.getX(), hero.getY() + 5);     //le mozgatja
-                            image.setImage(new ImageIcon("pac_down.png").getImage());
+                        case 40:                                    //moving and turning south
+                            pacmanLabel.setLocation(pacmanLabel.getX(), pacmanLabel.getY() + 5);
+                            if (pacccing <= 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Down()).getImage());
+                                pacccing++;
+                            } else if (pacccing > 5) {
+                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
+                                pacccing++;
+                                if (pacccing == 10)
+                                    pacccing = 0;
+                            }
                             break;
                     }
-
-
-
-
-                    if(!(clip.isRunning())) playSound("pacman_chomp.WAV");
+                    if (!(clip.isRunning())){
+                        playSound("pacman_chomp.WAV");
+                    }
+                    //g1.move();
 
 
                 } catch (IOException ioException) {
@@ -109,8 +137,6 @@ boolean kapcsolo=true;
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -121,7 +147,7 @@ boolean kapcsolo=true;
     }
 
     void playSound(String soundFile) throws IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
-         clip = AudioSystem.getClip();
+        clip = AudioSystem.getClip();
         AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(soundFile));
         clip.open(inputStream);
         clip.start();
