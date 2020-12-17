@@ -1,3 +1,7 @@
+//gives an outfit for the program
+//responsible for menu
+//responsible for sound
+//responsible for frame etc.....
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -11,6 +15,7 @@ import java.io.File;
 public class Window {
     JLabel hero = new JLabel();
     ImageIcon image;
+
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         JFrame f = new JFrame();
@@ -79,7 +84,7 @@ public class Window {
                     }
 
 
-                    playSound("pacman_chomp.WAV");          //itt ez nem jo mert egymasba jatsza a hangokat
+                    playSound("pacman_chomp.WAV");
 
 
                 } catch (IOException ioException) {
