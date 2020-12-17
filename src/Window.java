@@ -13,9 +13,10 @@ import java.io.File;
 
 
 public class Window {
-    JLabel hero = new JLabel();
+    JLabel hero=new JLabel();
     ImageIcon image;
-
+    Clip clip;
+boolean kapcsolo=true;
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         JFrame f = new JFrame();
@@ -23,9 +24,9 @@ public class Window {
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         f.setIconImage(img.getImage());
 
-        JPanel panel = new JPanel();
-        //panel.setBackground(Color.BLACK);
-        f.add(panel);
+
+
+
 
         playSound("pacman_beginning.WAV");    //plays starting music
         image = new ImageIcon("pac_right.png");
@@ -34,13 +35,15 @@ public class Window {
         hero = (new JLabel(image));
         f.setLayout(null);
         f.add(hero);
-        hero.setSize(50, 32);
+        hero.setSize(48, 48);
         hero.setLocation(0, 0);
+
 
         f.setSize(800, 600);
         f.setResizable(false);
         f.setTitle("PACMAN");
         f.setLocationRelativeTo(null);
+        f.getContentPane().setBackground(new Color(4,5,42));
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
 
@@ -53,7 +56,6 @@ public class Window {
 
             @Override
             public void keyPressed(KeyEvent e) {
-
 
                 try {
                     //az ablak bal felso sarka a (0,0)
@@ -74,7 +76,16 @@ public class Window {
 
                         case 39:       //jobb nyil kodja
                             hero.setLocation(hero.getX() + 5, hero.getY());     //jobbra mozgatja
-                            image.setImage(new ImageIcon("pac_right.png").getImage());
+                            if (kapcsolo){
+                                image.setImage(new ImageIcon("pac_right.png").getImage());
+                                kapcsolo=false;
+                            }
+                            else{
+                                image.setImage(new ImageIcon("pac_full.png").getImage());
+                                kapcsolo=true;
+                            }
+
+
                             break;
 
                         case 40:
@@ -84,7 +95,9 @@ public class Window {
                     }
 
 
-                    playSound("pacman_chomp.WAV");
+
+
+                    if(!(clip.isRunning())) playSound("pacman_chomp.WAV");
 
 
                 } catch (IOException ioException) {
@@ -108,7 +121,7 @@ public class Window {
     }
 
     void playSound(String soundFile) throws IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
-        Clip clip = AudioSystem.getClip();
+         clip = AudioSystem.getClip();
         AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(soundFile));
         clip.open(inputStream);
         clip.start();

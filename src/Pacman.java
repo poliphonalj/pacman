@@ -3,4 +3,14 @@
 
 
 public class Pacman {
+
+    private String path;
+
+    public Pacman(){
+       this.path=path;
+    }
+
+
+
+
 }
