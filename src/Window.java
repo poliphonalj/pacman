@@ -18,33 +18,31 @@ public class Window {
     Clip clip;
     int pacccing = 0;            //opening and closing the mouth
     Ghost g1;
+    boolean gameOn = true;
+    Pacman pacman;
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-        Pacman pacman = new Pacman();
 
+        pacman = new Pacman();
+        pacman.setHorizontalAlignment(10);
 
         JFrame frame = new JFrame();
-
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
-
         playSound("pacman_beginning.WAV");    //plays starting music
-        image = new ImageIcon("pac_right.png");
+       // image = new ImageIcon("pac_right.png");
 
-        pacmanLabel.setHorizontalAlignment(10);
-        pacmanLabel = (new JLabel(image));
+
+        //pacmanLabel = (new JLabel(image));
         frame.setLayout(null);
-        frame.add(pacmanLabel);
+        frame.add(pacman);
 
 
-        Ghost g1=new Ghost();
+        Ghost g1 = new Ghost();
         frame.add(g1);
 
-
-
-        pacmanLabel.setSize(50, 50);
-        pacmanLabel.setLocation(0, 0);
-
+        //pacmanLabel.setSize(50, 50);
+        //pacmanLabel.setLocation(0, 0);
 
         frame.setSize(800, 600);
         frame.setResizable(false);
@@ -57,76 +55,30 @@ public class Window {
 
         frame.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
+            public void keyTyped(KeyEvent e) { }
 
             @Override
             public void keyPressed(KeyEvent e) {
-
                 try {
                     //az ablak bal felso sarka a (0,0)
-
                     switch (e.getKeyCode()) {
-
                         case 37:       //balra nyil kodja
-                            pacmanLabel.setLocation(pacmanLabel.getX() - 5, pacmanLabel.getY());     //moving and turning towards to west
-                            if (pacccing <= 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Left()).getImage());
-                                pacccing++;
-                            } else if (pacccing > 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
-                                pacccing++;
-                                if (pacccing == 10)
-                                    pacccing = 0;
-                            }
+                            pacman.move(37);
                             break;
-
                         case 38:       //fel nyil kodja
-                            pacmanLabel.setLocation(pacmanLabel.getX(), pacmanLabel.getY() - 5);     //moving and turning towards to north
-                            if (pacccing <= 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Up()).getImage());
-                                pacccing++;
-                            } else if (pacccing > 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
-                                pacccing++;
-                                if (pacccing == 10)
-                                    pacccing = 0;
-                            }
+                            pacman.move(38);
                             break;
-
-
                         case 39:       //jobb nyil kodja
-                            pacmanLabel.setLocation(pacmanLabel.getX() + 5, pacmanLabel.getY());     //moving east
-                            if (pacccing <= 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Right()).getImage());
-                                pacccing++;
-                            } else if (pacccing > 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
-                                pacccing++;
-                                if (pacccing == 10)
-                                    pacccing = 0;
-                            }
+                            pacman.move(39);
                             break;
-
-                        case 40:                                    //moving and turning south
-                            pacmanLabel.setLocation(pacmanLabel.getX(), pacmanLabel.getY() + 5);
-                            if (pacccing <= 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Down()).getImage());
-                                pacccing++;
-                            } else if (pacccing > 5) {
-                                image.setImage(new ImageIcon(pacman.getPath_Full()).getImage());
-                                pacccing++;
-                                if (pacccing == 10)
-                                    pacccing = 0;
-                            }
+                        case 40:       //moving and turning south
+                            pacman.move(40);
                             break;
                     }
-                    if (!(clip.isRunning())){
+                    if (!(clip.isRunning())) {
                         playSound("pacman_chomp.WAV");
                     }
-                    //g1.move();
-
+                    //g1.move();            at every keyEvent the ghosts are moving de nem joooooooo
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -140,9 +92,7 @@ public class Window {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
+            public void keyReleased(KeyEvent e) { }
         });
     }
 
@@ -153,5 +103,3 @@ public class Window {
         clip.start();
     }
 }
-
-
