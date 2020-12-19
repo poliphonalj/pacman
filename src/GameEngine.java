@@ -7,5 +7,18 @@
 //knows the scores and level of the game
 
 
+import javax.swing.*;
+
 public class GameEngine {
+    JLabel over;
+
+    public JLabel gameOver(){
+       over=new JLabel(new ImageIcon("over.png"));
+       over.setSize(400,300);
+       over.setLocation(200,120);
+
+       return over;
+    }
+
+
 }

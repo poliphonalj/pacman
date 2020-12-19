@@ -20,29 +20,27 @@ public class Window {
     Ghost g1;
     boolean gameOn = true;
     Pacman pacman;
+    GameEngine game;
+    JFrame frame = new JFrame();
+
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-
         pacman = new Pacman();
         pacman.setHorizontalAlignment(10);
 
-        JFrame frame = new JFrame();
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
         playSound("pacman_beginning.WAV");    //plays starting music
-       // image = new ImageIcon("pac_right.png");
+        // image = new ImageIcon("pac_right.png");
 
 
         //pacmanLabel = (new JLabel(image));
         frame.setLayout(null);
         frame.add(pacman);
-
+        game = new GameEngine();
 
         Ghost g1 = new Ghost();
         frame.add(g1);
-
-        //pacmanLabel.setSize(50, 50);
-        //pacmanLabel.setLocation(0, 0);
 
         frame.setSize(800, 600);
         frame.setResizable(false);
@@ -55,7 +53,8 @@ public class Window {
 
         frame.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) { }
+            public void keyTyped(KeyEvent e) {
+            }
 
             @Override
             public void keyPressed(KeyEvent e) {
@@ -74,11 +73,22 @@ public class Window {
                         case 40:       //moving and turning south
                             pacman.move(40);
                             break;
+
+                        case 27:       //esc game over
+                            frame.remove(pacman);
+                            frame.remove(g1);
+                            frame.validate();
+                            frame.setSize(800,600);         //redraw the frame with a game over logo
+                            frame.add(game.gameOver());
+                            playSound("gameover.WAV");
+                            frame.setVisible(true);
+                            break;
+
                     }
                     if (!(clip.isRunning())) {
                         playSound("pacman_chomp.WAV");
                     }
-                    //g1.move();            at every keyEvent the ghosts are moving de nem joooooooo
+                    // g1.move();            at every keyEvent the ghosts are moving de nem joooooooo
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -92,7 +102,8 @@ public class Window {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) { }
+            public void keyReleased(KeyEvent e) {
+            }
         });
     }
 

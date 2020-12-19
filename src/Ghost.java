@@ -8,7 +8,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class Ghost extends JLabel {
-    boolean gameOn=true;
 
     public Ghost() {
         super(new ImageIcon("red_Ghost.png"));
