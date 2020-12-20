@@ -13,14 +13,12 @@ import java.io.File;
 
 
 public class Window {
-    JLabel pacmanLabel = new JLabel();
-    ImageIcon image;
+
     Clip clip;
     int pacccing = 0;            //opening and closing the mouth
-    Ghost g1;
-    boolean gameOn = true;
+    static boolean gameOn = true;
     Pacman pacman;
-    GameEngine game;
+    GameEngine gameEngine;
     JFrame frame = new JFrame();
 
 
@@ -31,13 +29,10 @@ public class Window {
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
         playSound("pacman_beginning.WAV");    //plays starting music
-        // image = new ImageIcon("pac_right.png");
 
-
-        //pacmanLabel = (new JLabel(image));
         frame.setLayout(null);
         frame.add(pacman);
-        game = new GameEngine();
+        gameEngine = new GameEngine();
 
         Ghost g1 = new Ghost();
         frame.add(g1);
@@ -59,36 +54,53 @@ public class Window {
             @Override
             public void keyPressed(KeyEvent e) {
                 try {
+                    if (gameOn == false) {  //in case of a game over this arranges the game over screen
+                        frame.remove(pacman);
+                        frame.remove(g1);
+                        frame.validate();
+                        frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
+                        frame.setSize(800, 601);
+                        playSound("gameover.WAV");
+                        frame.setVisible(true);
+                    }
                     //az ablak bal felso sarka a (0,0)
                     switch (e.getKeyCode()) {
                         case 37:       //balra nyil kodja
                             pacman.move(37);
+                            gameEngine.isGameOver();        //ask gameEngine if it is a gameover
                             break;
                         case 38:       //fel nyil kodja
                             pacman.move(38);
+                            gameEngine.isGameOver();
                             break;
                         case 39:       //jobb nyil kodja
                             pacman.move(39);
+                            gameEngine.isGameOver();
                             break;
                         case 40:       //moving and turning south
                             pacman.move(40);
+                            gameEngine.isGameOver();
                             break;
 
-                        case 27:       //esc game over
+                        case (27):       //game over created by pressing "esc" button
                             frame.remove(pacman);
                             frame.remove(g1);
                             frame.validate();
-                            frame.setSize(800,600);         //redraw the frame with a game over logo
-                            frame.add(game.gameOver());
+                            frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
+                            frame.setSize(800, 601);
                             playSound("gameover.WAV");
                             frame.setVisible(true);
                             break;
-
                     }
                     if (!(clip.isRunning())) {
                         playSound("pacman_chomp.WAV");
                     }
-                    // g1.move();            at every keyEvent the ghosts are moving de nem joooooooo
+
+
+                    g1.move(gameEngine.moveGhost());//this is the core of the program, moves the ghost to the suitable coorinates
+
+
+
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();

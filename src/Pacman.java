@@ -9,17 +9,16 @@ import java.awt.*;
 
 public class Pacman extends JLabel {
 
+    static Point pacLocation;
     ImageIcon pacToRight = new ImageIcon("pac_right.png");
     ImageIcon pacToLeft = new ImageIcon("pac_left.png");
     ImageIcon pacToUp = new ImageIcon("pac_up.png");
     ImageIcon pacToDown = new ImageIcon("pac_down.png");
     ImageIcon pacFull = new ImageIcon("pac_full.png");
-
-    int pacccing = 0;
+    int pacccing = 0;           //responisble to delay the mouth motion of the pac
 
     public Pacman() {
         super(new ImageIcon("pac_right.png"));
-        Point p = new Point(this.getX(), this.getY());
         this.setSize(50, 50);
         this.setLocation(0, 0);
     }
@@ -28,7 +27,6 @@ public class Pacman extends JLabel {
         switch (i) {
             case 37:       //balra nyil kodja
                 if (this.getX() > 0) {
-
                     this.setLocation(this.getX() - 5, this.getY());     //moving and turning towards to west
                     if (pacccing <= 5) {
                         this.setIcon(pacToLeft);
@@ -39,8 +37,10 @@ public class Pacman extends JLabel {
                         if (pacccing == 10)
                             pacccing = 0;
                     }
+                    pacLocation = new Point(this.getX() - 5, this.getY());
                     break;
                 }
+
             case 38:       //fel nyil kodja
                 if (this.getY() > 0) {
                     this.setLocation(this.getX(), this.getY() - 5);     //moving and turning towards to north
@@ -53,6 +53,7 @@ public class Pacman extends JLabel {
                         if (pacccing == 10)
                             pacccing = 0;
                     }
+                    pacLocation = new Point(this.getX(), this.getY() - 5);
                     break;
                 }
 
@@ -69,6 +70,7 @@ public class Pacman extends JLabel {
                         if (pacccing == 10)
                             pacccing = 0;
                     }
+                    pacLocation = new Point(this.getX() + 5, this.getY());
                     break;
                 }
 
@@ -85,9 +87,9 @@ public class Pacman extends JLabel {
                         if (pacccing == 10)
                             pacccing = 0;
                     }
+                    pacLocation = new Point(this.getX(), this.getY() + 5);
                     break;
                 }
-
         }
     }
 
