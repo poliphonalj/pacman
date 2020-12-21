@@ -8,13 +8,13 @@ import java.awt.*;
 import java.util.Random;
 
 public class Ghost extends JLabel {
-    static Point actualPoint;
+    //static Point actualPoint;
 
-    public Ghost() {
-        super(new ImageIcon("red_Ghost.png"));
+    public Ghost(int x, int y, String color) {
+        super(new ImageIcon(color+"_Ghost.png"));
         this.setSize(50, 50);
-        this.setLocation(735,515);
-        actualPoint=(new Point(735,515));
+        this.setLocation(x,y);
+       // actualPoint=(new Point(x,y));
     }
 
     public void move(int i) {
@@ -23,20 +23,20 @@ public class Ghost extends JLabel {
         switch (i) {
             case 0:                                              //east
                 this.setLocation(new Point(p.x - 5, p.y));
-                actualPoint=new Point(p.x , p.y);
+               // actualPoint=new Point(p.x , p.y);//==mindenki egy actualpointon oszozik most
 
                 break;
             case 1:                                              //west
                 this.setLocation(new Point(p.x + 5, p.y));
-                actualPoint=new Point(p.x , p.y);
+                //actualPoint=new Point(p.x , p.y);
                 break;
             case 2:                                              //south
                 this.setLocation(new Point(p.x, p.y + 5));
-                actualPoint=new Point(p.x , p.y);
+                //actualPoint=new Point(p.x , p.y);
                 break;
             case 3:                                              //north
                 this.setLocation(new Point(p.x, p.y - 5));
-                actualPoint=new Point(p.x , p.y);
+                //actualPoint=new Point(p.x , p.y);
                 break;
         }
     }

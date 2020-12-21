@@ -20,6 +20,7 @@ public class Window {
     Pacman pacman;
     GameEngine gameEngine;
     JFrame frame = new JFrame();
+    Ghost g1;
 
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
@@ -34,8 +35,12 @@ public class Window {
         frame.add(pacman);
         gameEngine = new GameEngine();
 
-        Ghost g1 = new Ghost();
+        g1 = new Ghost(735, 515,"red");
+        System.out.println(g1);
+        Ghost g2 =new Ghost(735,0,"blue");
         frame.add(g1);
+        frame.add(g2);
+
 
         frame.setSize(800, 600);
         frame.setResizable(false);
@@ -57,6 +62,7 @@ public class Window {
                     if (gameOn == false) {  //in case of a game over this arranges the game over screen
                         frame.remove(pacman);
                         frame.remove(g1);
+                        frame.remove(g2);
                         frame.validate();
                         frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
                         frame.setSize(800, 601);
@@ -67,24 +73,29 @@ public class Window {
                     switch (e.getKeyCode()) {
                         case 37:       //balra nyil kodja
                             pacman.move(37);
-                            gameEngine.isGameOver();        //ask gameEngine if it is a gameover
+                            gameEngine.isGameOver(g1);
+                            gameEngine.isGameOver(g2);        //ask gameEngine if it is a gameover
                             break;
                         case 38:       //fel nyil kodja
                             pacman.move(38);
-                            gameEngine.isGameOver();
+                            gameEngine.isGameOver(g1);
+                            gameEngine.isGameOver(g2);
                             break;
                         case 39:       //jobb nyil kodja
                             pacman.move(39);
-                            gameEngine.isGameOver();
+                            gameEngine.isGameOver(g1);
+                            gameEngine.isGameOver(g2);
                             break;
                         case 40:       //moving and turning south
                             pacman.move(40);
-                            gameEngine.isGameOver();
+                            gameEngine.isGameOver(g1);
+                            gameEngine.isGameOver(g2);
                             break;
 
                         case (27):       //game over created by pressing "esc" button
                             frame.remove(pacman);
                             frame.remove(g1);
+                            frame.remove(g2);
                             frame.validate();
                             frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
                             frame.setSize(800, 601);
@@ -96,8 +107,9 @@ public class Window {
                         playSound("pacman_chomp.WAV");
                     }
 
-
-                    g1.move(gameEngine.moveGhost());//this is the core of the program, moves the ghost to the suitable coorinates
+                    System.out.println(gameEngine.moveGhost(g1)+"fdfdfdfdf");
+                    g1.move(gameEngine.moveGhost(g1));//this is the core of the program, moves the ghost to the suitable coorinates
+                    g2.move(gameEngine.moveGhost(g2));//this is the core of the program, moves the ghost to the suitable coorinates
 
 
 
