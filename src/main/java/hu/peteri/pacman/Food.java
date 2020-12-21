@@ -1,3 +1,4 @@
+package hu.peteri.pacman;
 //maybe an abstract or superr Class
 //has its on image
 //each food effects the game on a different way
