@@ -10,43 +10,81 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.io.File;
+import java.util.ArrayList;
 
 
-public class Window {
+public class Window{
 
     Clip clip;
     int pacccing = 0;            //opening and closing the mouth
     static boolean gameOn = true;
     Pacman pacman;
     GameEngine gameEngine;
-    JFrame frame = new JFrame();
+    static JFrame frame = new JFrame();
     Ghost g1;
+    Board board = new Board();
 
 
-    public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+    public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
         pacman = new Pacman();
-        pacman.setHorizontalAlignment(10);
+        pacman.setBounds(51,51,50,50);
 
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
         playSound("pacman_beginning.WAV");    //plays starting music
-
         frame.setLayout(null);
+
+
+
         frame.add(pacman);
         gameEngine = new GameEngine();
 
-        g1 = new Ghost(735, 515,"red");
+        g1 = new Ghost(673, 423, "red");
         System.out.println(g1);
-        Ghost g2 =new Ghost(735,0,"blue");
+        Ghost g2 = new Ghost(673, 51, "blue");
         frame.add(g1);
         frame.add(g2);
 
 
-        frame.setSize(800, 600);
+///////////////palya
+//////////////palya kulso kerete
+        for (int i = 0; i < 18; i++) {                                  //felso sor
+            frame.add(new Wall(i * 50, 0));
+        }
+        for (int i = 0; i < 5; i++) {                                   //jobb felso oszlop
+            frame.add(new Wall(0, i * 50));
+        }
+        for (int i = 6; i < 13; i++) {                                  //jobb also oszlop
+            frame.add(new Wall(0, i * 50));
+        }
+        for (int i = 0; i < 18; i++) {                                  //also sor
+            frame.add(new Wall(i * 50, 515));
+        }
+        for (int i = 0; i < 5; i++) {                                   //bal felso oszlop
+            frame.add(new Wall(735, i * 50));
+        }
+        for (int i = 6; i < 13; i++) {                                  //bal also oszlop
+            frame.add(new Wall(735, i * 50));
+        }
+////////////palya kulso kerete
+
+
+        //////////////////////////////////4 szelso T elem
+        for (int j = 0; j < 12; j += 2) {
+            for (int i = 2; i < 10; i += 2) {                                  //elso belso akadaly oszlop
+                frame.add(new Wall(100 + j * 52, i * 52));
+            }
+        }
+
+
+
+
+frame.setSize(800, 600);
         frame.setResizable(false);
         frame.setTitle("PACMAN");
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(new Color(4, 5, 42));
+       // frame.add(new JLabel(new ImageIcon("bor.png")));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
 
@@ -107,11 +145,9 @@ public class Window {
                         playSound("pacman_chomp.WAV");
                     }
 
-                    System.out.println(gameEngine.moveGhost(g1)+"fdfdfdfdf");
+                    System.out.println(gameEngine.moveGhost(g1) + "fdfdfdfdf");
                     g1.move(gameEngine.moveGhost(g1));//this is the core of the program, moves the ghost to the suitable coorinates
                     g2.move(gameEngine.moveGhost(g2));//this is the core of the program, moves the ghost to the suitable coorinates
-
-
 
 
                 } catch (IOException ioException) {
@@ -120,7 +156,7 @@ public class Window {
                     lineUnavailableException.printStackTrace();
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                     unsupportedAudioFileException.printStackTrace();
-                } catch (InterruptedException interruptedException) {
+                } catch (InterruptedException | AWTException interruptedException) {
                     interruptedException.printStackTrace();
                 }
             }

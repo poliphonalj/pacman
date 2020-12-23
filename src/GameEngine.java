@@ -30,7 +30,7 @@ public class GameEngine {
     //to minimalize this distance
     public int moveGhost(Ghost g1) {
         this.g1=g1;
-        System.out.println("gameengine"+g1);
+        //System.out.println("gameengine"+g1);
         int pacX = (int) Pacman.pacLocation.getX();
         int pacY = (int) Pacman.pacLocation.getY();
 
@@ -57,7 +57,7 @@ public class GameEngine {
             return 3;
         }
 
-       else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() , pointGhost.getY()+5)){   //south
+       else  if(pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() , pointGhost.getY()+5)){   //south
             System.out.println("4");
            return 2;
         }
@@ -69,12 +69,12 @@ public class GameEngine {
 
     //this method runs if the pac and ghost are crashing eachother
     public void isGameOver(Ghost g1) {
-       // System.out.println(Pacman.pacLocation + "   es   " + g1.getLocation());
+
         //a case of collision
-        System.out.println("eeeeeeeeeeeeeeeeee"+g1);
+
         if ((Math.abs(Pacman.pacLocation.getX() - g1.getX()) < 50) && (Math.abs(Pacman.pacLocation.getY() - g1.getY()) < 50)) {
             gameOver();
-            System.out.println("over");
+           // System.out.println("over");
         }
     }
 
