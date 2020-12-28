@@ -43,27 +43,27 @@ public class GameEngine {
         //to ghost tries to chase down the pac
         //if the original distance gets less in case of moving then the motion to east>>>the ghost moves to east
         if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() + 5, pointGhost.getY())){   //west
-            System.out.println("1");
+           // System.out.println("1");
             return 1;
         }
 
         else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() -5, pointGhost.getY())){   //east
-            System.out.println("0");
+           // System.out.println("0");
             return 0;
         }
 
         else if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() , pointGhost.getY()-5)){   //north
-            System.out.println("3");
+           // System.out.println("3");
             return 3;
         }
 
        else  if(pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() , pointGhost.getY()+5)){   //south
-            System.out.println("4");
+           // System.out.println("4");
            return 2;
         }
        else
-            System.out.println("5");
-           System.out.println(pointPac.distance(pointGhost));
+           // System.out.println("5");
+           //System.out.println(pointPac.distance(pointGhost));
            return 0;
     }
 

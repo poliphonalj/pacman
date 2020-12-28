@@ -1,50 +1,64 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
-    ArrayList<JLabel> board = new ArrayList<>();
-    JLabel jl=new JLabel(new ImageIcon("wall.png"));
+    ArrayList<Wall> array = new ArrayList<>();
+    ArrayList<Dot> dotarray = new ArrayList<>();
 
-    public ArrayList<JLabel>getBoard() {
-      int a=-50;
-        for(int i=0;i<18;i++){
-            a+=50;
-            jl.setBounds(a,0,50,50);
-          board.add(jl);
-          System.out.println(board.get(i));
-      }
+    public ArrayList<Wall> createBoard() {
+        ///////////////palya
+//////////////palya kulso kerete
+        for (int i = 0; i < 18; i++) {                                  //felso sor
+            array.add(new Wall(i * 50, 0));
+        }
+        for (int i = 0; i < 5; i++) {                                   //jobb felso oszlop
+            array.add(new Wall(0, i * 50));
+        }
+        for (int i = 6; i < 13; i++) {                                  //jobb also oszlop
+            array.add(new Wall(0, i * 50));
+        }
+        for (int i = 0; i < 18; i++) {                                  //also sor
+            array.add(new Wall(i * 50, 515));
+        }
+        for (int i = 0; i < 5; i++) {                                   //bal felso oszlop
+            array.add(new Wall(735, i * 50));
+        }
+        for (int i = 6; i < 13; i++) {                                  //bal also oszlop
+            array.add(new Wall(735, i * 50));
+        }
+////////////palya kulso kerete
 
 
-        return board;
+        //////////////////////////////////4 szelso T elem
+        for (int j = 0; j < 12; j += 2) {
+            for (int i = 2; i < 10; i += 2) {                                  //elso belso akadaly oszlop
+                array.add(new Wall(100 + j * 52, i * 52));
+            }
+        }
+
+
+        ///  for(int i=0;i<array.size();i++)
+        // System.out.println(array.get(i));
+//
+
+
+        return array;
     }
 
-        /*JLabel wall0 = new JLabel(new ImageIcon("leftcorner.png"));
-        wall0.setBounds(0, 0, 50, 50);//upper wall
 
-        JLabel wall1 = new JLabel(new ImageIcon("hor_line.png"));
-        wall1.setBounds(50, 0, 250, 50);//upper wall
+    public ArrayList<Dot> createDots() {
+        for (int i = 0; i < 16; i ++) {
+            for (int j = 0; j < 12; j ++) {
+                if (!((Window.frame.getContentPane().findComponentAt(i + 2, j + 2)) instanceof Wall)) {
+                   // System.out.println("dots");
+                    dotarray.add(new Dot(i*52,j*52));
+                }
+            }
 
-        JLabel wall2 = new JLabel(new ImageIcon("innerright.png"));
-        wall2.setBounds(300, 0, 50,50);//upper wall
-
-        JLabel wall3 = new JLabel(new ImageIcon("innerleft.png"));
-        wall3.setBounds(350, 0, 50,50);//upper wall
-
-        JLabel wall4 = new JLabel(new ImageIcon("ver_line.png"));
-        wall4.setBounds(325, 50, 50,50);//upper wall
-
-        JLabel wall5 = new JLabel(new ImageIcon("ver_line.png"));
-        wall5.setBounds(0, 50, 50,150);//upper wall
-
-        JLabel wall6 = new JLabel(new ImageIcon("downend.png"));
-        wall6.setBounds(0, 200, 50,50);//upper wall
-
-        board.add(wall0);
-        board.add(wall1);
-        board.add(wall2);
-        board.add(wall3);
-        board.add(wall4);
-        board.add(wall5);
-        board.add(wall6);
-*/
+        }
+        System.out.println(dotarray.get(1));
+        return dotarray;
     }
+
+}

@@ -21,26 +21,52 @@ public class Ghost extends JLabel {
         Point p = new Point(this.getX(), this.getY());              //actual point of the position of the ghost
 
         switch (i) {
-            case 0:       //east
+            case 0:                                              //east
+
+
+
+
+
+
+
+                if (this.getX() >= 781) {       //leaving the board on the right side and coming back from the left
+                    this.setLocation(-54, this.getY());
+                }
+
                 if ((Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY()) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 50) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 25) instanceof Wall)
                 ) {
-                    System.out.println("true its a wall");
+                   // System.out.println("true its a wall");
                 } else {
                     this.setLocation(new Point(p.x + 5, p.y));
                 }
+                if (this.getX() >= 699) {//leaving the board on the left side, coming back on the right
+                    this.setLocation(new Point(-40,246));
+
+                }
+
+
+
                 break;
 
             case 1: //west
+
                 if ((Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY()) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 50) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 25) instanceof Wall)
                 ) {
-                    System.out.println("true its a wall");
-                } else {
+                   // System.out.println("true its a wall");
+                    //System.out.println(this.getX()+"szellemx");
+                } else {//System.out.println("balra halado szellem x"+this.getLocation());
                     this.setLocation(new Point(p.x - 5, p.y));
                     //actualPoint=new Point(p.x , p.y);
+                    if (this.getX() <= 0) {//leaving the board on the left side, coming back on the right
+                        this.setLocation(new Point(700,246));
+
+                    }
+
+
                     break;
                 }
 
@@ -50,7 +76,7 @@ public class Ghost extends JLabel {
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() + 55) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() + 55) instanceof Wall)
                 ) {
-                    System.out.println("true its a wall");
+                   // System.out.println("true its a wall");
                 } else {
                     this.setLocation(new Point(p.x, p.y + 5));
                     //actualPoint=new Point(p.x , p.y);
@@ -63,7 +89,7 @@ public class Ghost extends JLabel {
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() - 5) instanceof Wall) ||
                         (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() - 5) instanceof Wall)
                 ) {
-                    System.out.println("true its a wall");
+                   // System.out.println("true its a wall");
                 } else {
                     this.setLocation(new Point(p.x, p.y - 5));
                     //actualPoint=new Point(p.x , p.y);
