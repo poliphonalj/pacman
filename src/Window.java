@@ -21,53 +21,65 @@ public class Window {
     Pacman pacman;
     GameEngine gameEngine;
     static JFrame frame = new JFrame();
+    JPanel gamePanel = new JPanel();
+    JPanel sidePanel=new JPanel();
+
     Ghost g1;
+    static int score=0;
+    JLabel scoreLabel=new JLabel("scores: ");
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
         Board b = new Board();          // adding the board to the Frame
         ArrayList aList = b.createBoard();
-        ArrayList dotslist=b.createDots();
+        ArrayList dotslist = b.createDots();
 
 
         pacman = new Pacman();
-        pacman.setBounds(51, 51, 50, 50);
+        pacman.setBounds(33, 33, 30, 30);
 
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
         playSound("pacman_beginning.WAV");    //plays starting music
-        frame.setLayout(null);
 
-        frame.add(pacman);
+        gamePanel.setLayout(null);
+
+        gamePanel.add(pacman);
         gameEngine = new GameEngine();
 
         g1 = new Ghost(673, 423, "red");
-      //  System.out.println(g1);
+        //  System.out.println(g1);
         //Ghost g2 = new Ghost(673, 51, "blue");
-        frame.add(g1);
-       // frame.add(g2);
-
+        gamePanel.add(g1);
+        // frame.add(g2);
 
 
         for (int i = 0; i < aList.size(); i++) {
-            frame.add((Wall) aList.get(i));
+            gamePanel.add((Wall) aList.get(i));
         }
 
         for (int i = 0; i < dotslist.size(); i++) {
-            frame.add((Dot) dotslist.get(i));
+            gamePanel.add((Dot) dotslist.get(i));
         }
 
 
-
-
-
-
-
-        frame.setSize(800, 600);
+       gamePanel.setSize(757, 600);
+       //sidePanel.setSize(100,600);
+        //scoreLabel.setSize(100,600);
         frame.setResizable(false);
+
         frame.setTitle("PACMAN");
+
+
+       // sidePanel.add(scoreLabel);
+        frame.setLayout(null);
+
+
+       // frame.add(sidePanel);
+        //gamePanel.setBounds(200,50,740,550);
+        frame.add(gamePanel);
+
+        frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().setBackground(new Color(4, 5, 42));
-        // frame.add(new JLabel(new ImageIcon("bor.png")));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
 
@@ -81,21 +93,25 @@ public class Window {
             public void keyPressed(KeyEvent e) {
                 try {
                     if (gameOn == false) {  //in case of a game over this arranges the game over screen
-                        frame.remove(pacman);
-                        frame.remove(g1);
+                        gamePanel.remove(pacman);
+                        gamePanel.remove(g1);
                         //frame.remove(g2);
-                        frame.validate();
-                        frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                        frame.setSize(800, 601);
+                        gamePanel.validate();
+                        gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
+                        gamePanel.setSize(1000, 601);
                         playSound("gameover.WAV");
-                        frame.setVisible(true);
+                        gamePanel.setVisible(true);
                     }
                     //az ablak bal felso sarka a (0,0)
                     switch (e.getKeyCode()) {
                         case 37:       //balra nyil kodja
+
+                            System.out.println("nhnhnhnnnhnhnhnhnnhnhnhnhnnhnhnnh");
+
+
                             pacman.move(37);
                             gameEngine.isGameOver(g1);
-                          //  gameEngine.isGameOver(g2);        //ask gameEngine if it is a gameover
+                            //  gameEngine.isGameOver(g2);        //ask gameEngine if it is a gameover
                             break;
                         case 38:       //fel nyil kodja
                             pacman.move(38);
@@ -114,14 +130,14 @@ public class Window {
                             break;
 
                         case (27):       //game over created by pressing "esc" button
-                            frame.remove(pacman);
-                            frame.remove(g1);
+                            gamePanel.remove(pacman);
+                            gamePanel.remove(g1);
                             //frame.remove(g2);
-                            frame.validate();
-                            frame.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                            frame.setSize(800, 601);
+                            gamePanel.validate();
+                            gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
+                            gamePanel.setSize(800, 601);
                             playSound("gameover.WAV");
-                            frame.setVisible(true);
+                            gamePanel.setVisible(true);
                             break;
                     }
                     if (!(clip.isRunning())) {

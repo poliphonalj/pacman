@@ -7,9 +7,9 @@ import javax.swing.*;
         int y;
 
         public  EmptyField(int x, int y){
-            super(new ImageIcon("empty.png"));
+            //super(new ImageIcon("empty.png"));
             this.x=x;
             this.y=y;
-            this.setBounds(x,y,45,45);
+            this.setBounds(x,y,32,32);
         }
     }

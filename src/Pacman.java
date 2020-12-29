@@ -3,11 +3,8 @@
 
 //a pacman is 50x50 pixells
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 
@@ -23,16 +20,25 @@ public class Pacman extends JLabel {
 
     public Pacman() {
         super(new ImageIcon("pac_right.png"));
-        this.setBounds(100, 100, 50, 50);
+        this.setBounds(100, 100, 33, 33);
 
     }
 
     public void move(int i) throws AWTException, IOException {
         switch (i) {
             case 37:       //balra nyil kodja
-                if ((Window.frame.getContentPane().findComponentAt(this.getX()-5,this.getY()+47) instanceof Dot || (Window.frame.getContentPane().findComponentAt(this.getX()-5,this.getY()+52) instanceof Dot))) {//51
-                    System.out.println("dot");
-                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()-5 , this.getY()+47)).setIcon(new ImageIcon("empty.png"));
+                if ((Window.frame.getContentPane().findComponentAt(this.getX()-5,this.getY()) instanceof Dot )) {//51
+
+
+
+                    if(( ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()-5, this.getY() )).getText().equals("."))){
+                        Window.score += 10;
+                        System.out.println(Window.score);
+                    }
+                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()-5, this.getY() )).setText("");
+
+
+
 
                     //dotslistbol kivenni es emptybe betetnni
                 }
@@ -46,8 +52,8 @@ public class Pacman extends JLabel {
                 }
 
                 if ((Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY()) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 50) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 25) instanceof Wall)
+                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 30) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 15) instanceof Wall)
                 ) {
                    // System.out.println("true its a wall");
                 } else {
@@ -69,9 +75,15 @@ public class Pacman extends JLabel {
 
             case 38:       //fel nyil kodja
                 System.out.println(this.getX()+" "+this.getY());
-                if ((Window.frame.getContentPane().findComponentAt(this.getX()+46,this.getY()-51) instanceof Dot || (Window.frame.getContentPane().findComponentAt(this.getX()+51,this.getY()-51) instanceof Dot))) {//51
-                    System.out.println("dot");
-                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()+46 , this.getY()-51)).setIcon(new ImageIcon("empty.png"));
+                if ((Window.frame.getContentPane().findComponentAt(this.getX(),this.getY()-31) instanceof Dot )) {//51
+
+                    if(( ((Dot) Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() - 31)).getText().equals("."))){
+                        Window.score += 10;
+                        System.out.println(Window.score);
+                    }
+                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() - 31)).setText("");
+
+
 
                     //dotslistbol kivenni es emptybe betetnni
                 }
@@ -82,8 +94,8 @@ public class Pacman extends JLabel {
 
 
                 if ((Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() - 5) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() - 5) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() - 5) instanceof Wall)
+                        (Window.frame.getContentPane().findComponentAt(this.getX() + 30, this.getY() - 5) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(this.getX() + 15, this.getY() - 5) instanceof Wall)
                 ) {
                    // System.out.println("true its a wall");
                 } else {
@@ -103,11 +115,12 @@ public class Pacman extends JLabel {
 
             case 39:       //jobb nyil kodja
 
-                if ((Window.frame.getContentPane().findComponentAt(this.getX()+51,this.getY()+47) instanceof Dot || (Window.frame.getContentPane().findComponentAt(this.getX()+51,this.getY()+52) instanceof Dot))) {//51
-                    System.out.println("dot");
-                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX() + 51, this.getY()+47)).setIcon(new ImageIcon("empty.png"));
-
-                    //dotslistbol kivenni es emptybe betetnni
+                if ((Window.frame.getContentPane().findComponentAt(this.getX()+31,this.getY()) instanceof Dot )) {//51
+                    if(( ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()+31, this.getY() )).getText().equals("."))){
+                        Window.score += 10;
+                        System.out.println(Window.score);
+                    }
+                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX()+31, this.getY() )).setText("");
                 }
 
 
@@ -116,9 +129,9 @@ public class Pacman extends JLabel {
                 pacLocation = new Point(-54, this.getY());
             }
 
-            if ((Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY()) instanceof Wall) ||
-                    (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 50) instanceof Wall) ||
-                    (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 25) instanceof Wall)
+            if ((Window.frame.getContentPane().findComponentAt(this.getX() + 33, this.getY()) instanceof Wall) ||
+                    (Window.frame.getContentPane().findComponentAt(this.getX() + 33, this.getY() + 30) instanceof Wall) ||
+                    (Window.frame.getContentPane().findComponentAt(this.getX() + 33, this.getY() + 15) instanceof Wall)
             ) {
                // System.out.println("true its a wall");
             } else {
@@ -138,9 +151,20 @@ public class Pacman extends JLabel {
 
 
             case 40:                                    //moving and turning south
-                if ((Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() + 55) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() + 55) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() + 55) instanceof Wall)
+
+
+                if ((Window.frame.getContentPane().findComponentAt(this.getX(),this.getY()+31) instanceof Dot )) {//51
+                    if(( ((Dot) Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() + 31)).getText().equals("."))){
+                        Window.score += 10;
+                        System.out.println(Window.score);
+                    }
+                    ((Dot) Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() + 31)).setText("");
+
+
+                }
+                if ((Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() + 33) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(this.getX() + 30, this.getY() + 33) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(this.getX() + 15, this.getY() + 33) instanceof Wall)
                 ) {
                    // System.out.println("true its a wall");
                 } else {

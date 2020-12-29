@@ -8,7 +8,7 @@ public class Wall extends JLabel {
         super(new ImageIcon("wall.png"));
         this.x=x;
         this.y=y;
-        this.setBounds(x,y,45,45);
+        this.setBounds(x,y,32,32);
     }
 
 }

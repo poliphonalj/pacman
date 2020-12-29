@@ -3,16 +3,14 @@
 
 
 import javax.swing.*;
-import javax.swing.text.Position;
 import java.awt.*;
-import java.util.Random;
 
 public class Ghost extends JLabel {
     //static Point actualPoint;
 
     public Ghost(int x, int y, String color) {
         super(new ImageIcon(color + "_Ghost.png"));
-        this.setSize(50, 50);
+        this.setSize(30, 30);
         this.setLocation(x, y);
         // actualPoint=(new Point(x,y));
     }
