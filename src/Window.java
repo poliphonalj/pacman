@@ -26,7 +26,8 @@ public class Window {
 
     Ghost g1;
     static int score=0;
-    JLabel scoreLabel=new JLabel("scores: ");
+    JLabel scoreLabel=new JLabel();
+
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
         Board b = new Board();          // adding the board to the Frame
@@ -70,15 +71,21 @@ public class Window {
         frame.setTitle("PACMAN");
 
 
-        sidePanel.add(scoreLabel);
-        //frame.setLayout(new BorderLayout());
+scoreLabel.setIcon(new ImageIcon("score.png"));
+        sidePanel.add(scoreLabel,BorderLayout.WEST);
+        frame.setLayout(new BorderLayout());
 
+//scoreLabel.setSize(200,600);
 
 
         //gamePanel.setBounds(200,50,740,550);
         frame.add(gamePanel);
- frame.add(sidePanel);
-        frame.setSize(1000, 600);
+ frame.add(sidePanel,BorderLayout.EAST);
+       sidePanel.setBackground( new Color(4, 5, 42));
+frame.setBackground( new Color(4, 5, 42));
+gamePanel.setBackground( new Color(4, 5, 42));
+
+        frame.setSize(1100, 580);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
@@ -98,7 +105,7 @@ public class Window {
                         //frame.remove(g2);
                         gamePanel.validate();
                         gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                        gamePanel.setSize(1000, 601);
+                        //gamePanel.setSize(1000, 601);
                         playSound("gameover.WAV");
                         gamePanel.setVisible(true);
                     }

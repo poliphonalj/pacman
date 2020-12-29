@@ -116,7 +116,7 @@ public class Board {
 
 
     public ArrayList<Dot> createDots() {
-        for (int i = 0; i < 33; i ++) {
+        for (int i = 0; i < 23; i ++) {
             for (int j = 0; j < 17; j ++) {
                 if (!((Window.frame.getContentPane().findComponentAt(i + 2, j + 2)) instanceof Wall)) {
                    // System.out.println("dots");
