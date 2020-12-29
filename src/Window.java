@@ -62,23 +62,23 @@ public class Window {
         }
 
 
-       gamePanel.setSize(757, 600);
-       //sidePanel.setSize(100,600);
+       gamePanel.setSize(740, 560);
+       sidePanel.setSize(100,560);
         //scoreLabel.setSize(100,600);
-        frame.setResizable(false);
+        //frame.setResizable(false);
 
         frame.setTitle("PACMAN");
 
 
-       // sidePanel.add(scoreLabel);
-        frame.setLayout(null);
+        sidePanel.add(scoreLabel);
+        //frame.setLayout(new BorderLayout());
 
 
-       // frame.add(sidePanel);
+
         //gamePanel.setBounds(200,50,740,550);
         frame.add(gamePanel);
-
-        frame.setSize(1000, 700);
+ frame.add(sidePanel);
+        frame.setSize(1000, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
@@ -135,7 +135,7 @@ public class Window {
                             //frame.remove(g2);
                             gamePanel.validate();
                             gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                            gamePanel.setSize(800, 601);
+                            gamePanel.setSize(800, 550);
                             playSound("gameover.WAV");
                             gamePanel.setVisible(true);
                             break;

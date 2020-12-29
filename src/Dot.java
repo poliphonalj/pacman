@@ -13,9 +13,10 @@ public class Dot extends JLabel{//a boardhoz wallakat tartalmazo arraylist miatt
             this.setText(".");
             this.setHorizontalAlignment(SwingConstants.CENTER);
             this.setVerticalAlignment(SwingConstants.CENTER);
-            this.setForeground(Color.WHITE);
+            this.setForeground(Color.BLACK);
             this.setOpaque(true);
-            this.setBackground( new Color(4, 5, 42));
+            //this.setBackground( new Color(4, 5, 42));
+            //this.setBackground( (Color.YELLOW));
 
         this.setBounds(x,y,32,32);
         }
