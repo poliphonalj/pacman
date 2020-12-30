@@ -6,13 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Ghost extends JLabel {
-    //static Point actualPoint;
 
     public Ghost(int x, int y, String color) {
         super(new ImageIcon(color + "_Ghost.png"));
         this.setSize(30, 30);
         this.setLocation(x, y);
-        // actualPoint=(new Point(x,y));
     }
 
     public void move(int i) {
@@ -20,13 +18,6 @@ public class Ghost extends JLabel {
 
         switch (i) {
             case 0:                                              //east
-
-
-
-
-
-
-
                 if (this.getX() >= 781) {       //leaving the board on the right side and coming back from the left
                     this.setLocation(-54, this.getY());
                 }

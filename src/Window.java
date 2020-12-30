@@ -45,7 +45,7 @@ public class Window {
         pacman = new Pacman();
         gameEngine = new GameEngine();
 
-        g1 = new Ghost(673, 423, "red");
+        g1 = new Ghost(352, 300, "red");
         //Ghost g2 = new Ghost(673, 51, "blue");
 
         pacman.setBounds(33, 33, 30, 30);
@@ -126,20 +126,24 @@ public class Window {
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 1:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 0:
-                                   // gameEngine.gameOver();
+                                    Thread.sleep(1000);
                                     showGameOver();
                                     break;
                             }
@@ -154,19 +158,24 @@ public class Window {
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 1:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 0:
+                                    Thread.sleep(1000);
                                     showGameOver();
                                     //gameEngine.gameOver();
                                     break;
@@ -182,21 +191,25 @@ public class Window {
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 1:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 0:
+                                    Thread.sleep(1000);
                                     showGameOver();
-                                    //gameEngine.gameOver();
                                     break;
                             }
                             //gameEngine.isGameOver(g2);
@@ -210,21 +223,25 @@ public class Window {
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 1:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
                                     }
+                                    Thread.sleep(1000);
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
+                                    g1.setLocation(352,300);
                                     break;
 
                                 case 0:
-
-                                    showGameOver();//gameEngine.gameOver();
+                                    Thread.sleep(1000);
+                                    showGameOver();
                                     break;
                             }
                             //gameEngine.isGameOver(g2);

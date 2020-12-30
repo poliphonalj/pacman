@@ -31,35 +31,41 @@ public class GameEngine {
     //to minimalize this distance
     public int moveGhost(Ghost g1) {
         this.g1 = g1;
-        //System.out.println("gameengine"+g1);
+
         int pacX = (int) Pacman.pacLocation.getX();
         int pacY = (int) Pacman.pacLocation.getY();
 
-        int ghostX = (int) g1.getX();
-        int ghostY = (int) g1.getY();
+        int ghostX =  g1.getX();
+        int ghostY =  g1.getY();
 
         Point pointPac = (new Point(pacX, pacY));
         Point pointGhost = new Point(ghostX, ghostY);
 
         //to ghost tries to chase down the pac
         //if the original distance gets less in case of moving then the motion to east>>>the ghost moves to east
-        if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() + 5, pointGhost.getY())) {   //west
-            // System.out.println("1");
+        if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() + 4, pointGhost.getY())) {   //west
             return 1;
-        } else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() - 5, pointGhost.getY())) {   //east
-            // System.out.println("0");
+        }
+
+        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() - 4, pointGhost.getY())) {   //east
             return 0;
-        } else if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX(), pointGhost.getY() - 5)) {   //north
-            // System.out.println("3");
+        }
+
+        else if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX(), pointGhost.getY() - 4)) {   //north
             return 3;
-        } else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX(), pointGhost.getY() + 5)) {   //south
-            // System.out.println("4");
+        }
+
+        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX(), pointGhost.getY() + 4)) {   //south
             return 2;
-        } else
+        }
+
+        else
             // System.out.println("5");
             //System.out.println(pointPac.distance(pointGhost));
             return 0;
     }
+
+
 
     //this method runs if the pac and ghost are crashing eachother
     public int isCrash(Ghost g1) {
