@@ -10,5 +10,4 @@ public class Wall extends JLabel {
         this.y=y;
         this.setBounds(x,y,32,32);
     }
-
 }

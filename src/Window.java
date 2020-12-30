@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -16,66 +18,59 @@ import java.util.ArrayList;
 public class Window {
 
     Clip clip;
-    int pacccing = 0;            //opening and closing the mouth
-    static boolean gameOn = true;
-    Pacman pacman;
-    GameEngine gameEngine;
     static JFrame frame = new JFrame();
+    static int score = 0;
+
+    Pacman pacman;
+    Ghost g1;
+    GameEngine gameEngine;
+
+    JPanel gameOverPanel = new JPanel();
     JPanel gamePanel = new JPanel();
     JPanel sidePanel = new JPanel();
-
-    Ghost g1;
-    static int score = 0;
     JLabel scoreLabel = new JLabel();
     JLabel scoringLabel = new JLabel("0");
-    JLabel livesLabel=new JLabel();
+    JLabel livesLabel = new JLabel();
+    JLabel soundLabel = new JLabel();
+    JLabel gameoverLabel = new JLabel();
 
-
+    int soundFlag = 1;
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
+
         Board b = new Board();          // adding the board to the Frame
-        ArrayList aList = b.createBoard();
+        ArrayList wallList = b.createBoard();
         ArrayList dotslist = b.createDots();
 
-
         pacman = new Pacman();
+        gameEngine = new GameEngine();
+
+        g1 = new Ghost(673, 423, "red");
+        //Ghost g2 = new Ghost(673, 51, "blue");
+
         pacman.setBounds(33, 33, 30, 30);
 
         ImageIcon img = new ImageIcon("pacman.png");//ez az ablak ikonja
         frame.setIconImage(img.getImage());
+        frame.setTitle("PACMAN");
         playSound("pacman_beginning.WAV");    //plays starting music
 
         gamePanel.setLayout(null);
-
         gamePanel.add(pacman);
-        gameEngine = new GameEngine();
-
-        g1 = new Ghost(673, 423, "red");
-        //  System.out.println(g1);
-        //Ghost g2 = new Ghost(673, 51, "blue");
         gamePanel.add(g1);
+
         // frame.add(g2);
 
 
-        for (int i = 0; i < aList.size(); i++) {
-            gamePanel.add((Wall) aList.get(i));
+        for (int i = 0; i < wallList.size(); i++) {             //drawing the board items from an arrayList
+            gamePanel.add((Wall) wallList.get(i));
         }
 
-        for (int i = 0; i < dotslist.size(); i++) {
+        for (int i = 0; i < dotslist.size(); i++) {              //drawing the dot items from an arrayList
             gamePanel.add((Dot) dotslist.get(i));
         }
-
-
-        //gamePanel.setBounds(0,0,300, 560);
-        //sidePanel.setSize(100,560);
-        //scoreLabel.setSize(100,600);
-        //frame.setResizable(false);
-
-        frame.setTitle("PACMAN");
-
-
         livesLabel.setIcon(new ImageIcon("lives3.png"));
-
+        soundLabel.setIcon(new ImageIcon("speaker_on.png"));
 
 
         scoreLabel.setFont(new Font("Serif", Font.PLAIN, 44));
@@ -90,11 +85,12 @@ public class Window {
         scoringLabel.setForeground(Color.white);
 
         sidePanel.add(livesLabel);
-        livesLabel.setBounds(35,400,200,60);
+        livesLabel.setBounds(35, 400, 200, 60);
 
+        sidePanel.add(soundLabel);
+        soundLabel.setBounds(70, 300, 200, 50);
 
         sidePanel.setLayout(null);
-        // frame.setLayout(null);
         gamePanel.setBounds(0, 0, 742, 544);
         sidePanel.setBounds(742, 0, 250, 544);
 
@@ -103,8 +99,6 @@ public class Window {
         frame.add(sidePanel);
         frame.add(gamePanel);
 
-        //sidePanel.setBackground(new Color(4, 5, 42));
-        // sidePanel.setSize(200,600);
         sidePanel.setBackground(new Color(4, 5, 42));
         frame.setBackground(new Color(4, 5, 42));
         gamePanel.setBackground(new Color(4, 5, 42));
@@ -112,7 +106,7 @@ public class Window {
         frame.setSize(998, 580);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
         frame.addKeyListener(new KeyListener() {
@@ -123,64 +117,131 @@ public class Window {
             @Override
             public void keyPressed(KeyEvent e) {
                 try {
-                    if (gameOn == false) {  //in case of a game over this arranges the game over screen
-                        gamePanel.remove(pacman);
-                        gamePanel.remove(g1);
-                        //frame.remove(g2);
-                        gamePanel.validate();
-                        gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                        gamePanel.setSize(1000, 601);
-                        playSound("gameover.WAV");
-                        gamePanel.setVisible(true);
-                    }
-                    //az ablak bal felso sarka a (0,0)
                     switch (e.getKeyCode()) {
-                        case 37:       //balra nyil kodja
-
-                            System.out.println("nhnhnhnnnhnhnhnhnnhnhnhnhnnhnhnnh");
-
-
+                        case 37:       //left arrow
                             pacman.move(37);
-                            gameEngine.isGameOver(g1);
-                            //  gameEngine.isGameOver(g2);        //ask gameEngine if it is a gameover
                             scoringLabel.setText(score + "");
-                            break;
-                        case 38:       //fel nyil kodja
-                            pacman.move(38);
-                            gameEngine.isGameOver(g1);
-                            //gameEngine.isGameOver(g2);
-                            scoringLabel.setText(score + "");
-                            break;
-                        case 39:       //jobb nyil kodja
-                            pacman.move(39);
-                            gameEngine.isGameOver(g1);
-                            //gameEngine.isGameOver(g2);
-                            scoringLabel.setText(score + "");
-                            break;
-                        case 40:       //moving and turning south
-                            pacman.move(40);
-                            gameEngine.isGameOver(g1);
-                            //gameEngine.isGameOver(g2);
+                            switch (gameEngine.isCrash(g1)) {
+                                case 2:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives2.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
 
+                                case 1:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives1.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 0:
+                                   // gameEngine.gameOver();
+                                    showGameOver();
+                                    break;
+                            }
+                            //gameEngine.isGameOver(g2);
+                            break;
+
+                        case 38:       //upp arrow
+                            pacman.move(38);
                             scoringLabel.setText(score + "");
+                            switch (gameEngine.isCrash(g1)) {
+                                case 2:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives2.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 1:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives1.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 0:
+                                    showGameOver();
+                                    //gameEngine.gameOver();
+                                    break;
+                            }
+                            //gameEngine.isGameOver(g2);
+                            break;
+
+                        case 39:       //right arrow
+                            pacman.move(39);
+                            scoringLabel.setText(score + "");
+                            switch (gameEngine.isCrash(g1)) {
+                                case 2:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives2.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 1:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives1.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 0:
+                                    showGameOver();
+                                    //gameEngine.gameOver();
+                                    break;
+                            }
+                            //gameEngine.isGameOver(g2);
+                            break;
+
+                        case 40:       //down arrow
+                            pacman.move(40);
+                            scoringLabel.setText(score + "");
+                            switch (gameEngine.isCrash(g1)) {
+                                case 2:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives2.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 1:
+                                    if (!(soundFlag % 2 == 0)) {
+                                        playSound("gameover.WAV");
+                                    }
+                                    livesLabel.setIcon(new ImageIcon("lives1.png"));
+                                    pacman.setLocation(new Point(33, 33));
+                                    break;
+
+                                case 0:
+
+                                    showGameOver();//gameEngine.gameOver();
+                                    break;
+                            }
+                            //gameEngine.isGameOver(g2);
                             break;
 
                         case (27):       //game over created by pressing "esc" button
-                            gamePanel.remove(pacman);
-                            gamePanel.remove(g1);
-                            //frame.remove(g2);
-                            gamePanel.validate();
-                            gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                            gamePanel.setSize(700, 550);
-                            playSound("gameover.WAV");
-                            gamePanel.setVisible(true);
+                            if (!(soundFlag % 2 == 0)) {
+                                playSound("gameover.WAV");
+                            }
+                            showGameOver();
                             break;
                     }
-                    if (!(clip.isRunning())) {
+
+                    if (!(clip.isRunning()) && !(soundFlag % 2 == 0)) {
                         playSound("pacman_chomp.WAV");
                     }
 
-                    //System.out.println(gameEngine.moveGhost(g1) + "fdfdfdfdf");
                     g1.move(gameEngine.moveGhost(g1));//this is the core of the program, moves the ghost to the suitable coorinates
                     //g2.move(gameEngine.moveGhost(g2));//this is the core of the program, moves the ghost to the suitable coorinates
 
@@ -200,7 +261,60 @@ public class Window {
             public void keyReleased(KeyEvent e) {
             }
         });
+
+        soundLabel.addMouseListener(new MouseListener() {           //turns on or mutes the sound with the help of an int flag
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                soundFlag++;
+                if (soundFlag % 2 == 0) {              //to mute
+                    soundLabel.setIcon(new ImageIcon("speaker_mute.png"));
+                    clip.stop();
+                } else {
+                    soundLabel.setIcon(new ImageIcon("speaker_on.png"));
+                    clip.start();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
+
+    public void showGameOver() throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+        gamePanel.remove(pacman);
+        gamePanel.remove(g1);
+        frame.remove(gamePanel);
+        frame.remove(sidePanel);
+
+        gameoverLabel.setIcon(new ImageIcon("over.png"));     //redraw the frame with a game over logo
+        gameoverLabel.setBounds(0, 0, 300, 300);
+        gameOverPanel.add(gameoverLabel);
+        gameOverPanel.setBounds(0, 0, 998, 580);
+        frame.add(gameOverPanel);
+
+        playSound("gameover.WAV");
+        gameoverLabel.setBackground(new Color(4, 5, 42));
+        gameOverPanel.setBackground(new Color(4, 5, 42));
+        frame.setSize(999, 580);
+        frame.setLocationRelativeTo(null);
+
+        frame.setVisible(true);
+        frame.validate();
+    }
+
 
     void playSound(String soundFile) throws IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
         clip = AudioSystem.getClip();
