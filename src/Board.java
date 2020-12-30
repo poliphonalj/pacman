@@ -25,10 +25,10 @@ public class Board {
 
 
         for (int i = 0; i < 9; i++) {                                   //jobb felso oszlop
-            array.add(new Wall(710, i * 32));
+            array.add(new Wall(704, i * 32));
         }
         for (int i = 10; i < 17; i++) {                                  //jobb also oszlop
-            array.add(new Wall(710, i * 32));
+            array.add(new Wall(704, i * 32));
         }
 ////////////palya kulso kerete
 
@@ -66,6 +66,11 @@ public class Board {
             array.add(new Wall( i*32+352, 96));
         }
 
+        array.add(new Wall( 576, 128));
+        array.add(new Wall( 576, 160));
+
+        array.add(new Wall( 672, 160));
+        array.add(new Wall( 640, 160));
 
 
         for (int i = 0; i < 5; i ++) {                                  //balajtoval szembeni
@@ -94,6 +99,40 @@ public class Board {
         array.add(new Wall( 256, 448));
         array.add(new Wall( 256, 512));
 
+        array.add(new Wall( 320, 448));
+        array.add(new Wall( 320, 416));
+        array.add(new Wall( 320, 480));
+
+
+for(int i=0;i<4;i++){
+    array.add(new Wall( 352+i*32, 448));
+}
+
+        for(int i=0;i<4;i++){
+            array.add(new Wall( 512, 480-i*32));
+        }
+
+
+        for(int i=0;i<2;i++) {                                  //jobb also l elem
+            array.add(new Wall(576 + i * 32, 448));
+        }
+        for(int i=0;i<6;i++) {                                  //jobb also l elem
+            array.add(new Wall(640, 448-i*32));
+        }
+
+        for(int i=0;i<4;i++) {                                  //jobb also l elem
+            array.add(new Wall(576, 448-i*32));
+        }
+
+        for(int i=0;i<3;i++) {                                  //jobb also l elem
+            array.add(new Wall(576, 288-i*32));
+        }
+        array.add(new Wall(512, 192));
+
+        for(int i=0;i<3;i++){
+            array.add(new Wall(512, 256+i*32));
+        }
+
 
         array.add(new Wall( 320, 256));         //szellemlak
         array.add(new Wall( 352, 256));
@@ -109,6 +148,13 @@ public class Board {
         for(int i=0;i<5;i++){
             array.add(new Wall( i*32+320, 352));
         }
+
+
+
+
+
+
+
 
 
         return array;

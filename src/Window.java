@@ -22,11 +22,14 @@ public class Window {
     GameEngine gameEngine;
     static JFrame frame = new JFrame();
     JPanel gamePanel = new JPanel();
-    JPanel sidePanel=new JPanel();
+    JPanel sidePanel = new JPanel();
 
     Ghost g1;
-    static int score=0;
-    JLabel scoreLabel=new JLabel();
+    static int score = 0;
+    JLabel scoreLabel = new JLabel();
+    JLabel scoringLabel = new JLabel("0");
+    JLabel livesLabel=new JLabel();
+
 
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
@@ -63,29 +66,50 @@ public class Window {
         }
 
 
-       gamePanel.setSize(740, 560);
-       sidePanel.setSize(100,560);
+        //gamePanel.setBounds(0,0,300, 560);
+        //sidePanel.setSize(100,560);
         //scoreLabel.setSize(100,600);
         //frame.setResizable(false);
 
         frame.setTitle("PACMAN");
 
 
-scoreLabel.setIcon(new ImageIcon("score.png"));
-        sidePanel.add(scoreLabel,BorderLayout.WEST);
-        frame.setLayout(new BorderLayout());
-
-//scoreLabel.setSize(200,600);
+        livesLabel.setIcon(new ImageIcon("lives3.png"));
 
 
-        //gamePanel.setBounds(200,50,740,550);
+
+        scoreLabel.setFont(new Font("Serif", Font.PLAIN, 44));
+        scoreLabel.setForeground(Color.white);
+        scoreLabel.setText("SCORES:");
+        scoringLabel.setFont(new Font("Serif", Font.PLAIN, 44));
+
+        sidePanel.add(scoreLabel);
+        scoreLabel.setBounds(30, 50, 200, 50);
+        sidePanel.add(scoringLabel);
+        scoringLabel.setBounds(70, 120, 200, 50);
+        scoringLabel.setForeground(Color.white);
+
+        sidePanel.add(livesLabel);
+        livesLabel.setBounds(35,400,200,60);
+
+
+        sidePanel.setLayout(null);
+        // frame.setLayout(null);
+        gamePanel.setBounds(0, 0, 742, 544);
+        sidePanel.setBounds(742, 0, 250, 544);
+
+        frame.setLayout(null);
+
+        frame.add(sidePanel);
         frame.add(gamePanel);
- frame.add(sidePanel,BorderLayout.EAST);
-       sidePanel.setBackground( new Color(4, 5, 42));
-frame.setBackground( new Color(4, 5, 42));
-gamePanel.setBackground( new Color(4, 5, 42));
 
-        frame.setSize(1100, 580);
+        //sidePanel.setBackground(new Color(4, 5, 42));
+        // sidePanel.setSize(200,600);
+        sidePanel.setBackground(new Color(4, 5, 42));
+        frame.setBackground(new Color(4, 5, 42));
+        gamePanel.setBackground(new Color(4, 5, 42));
+
+        frame.setSize(998, 580);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //ennek hianyaban nem all le program csak az ablak tunik el
@@ -105,7 +129,7 @@ gamePanel.setBackground( new Color(4, 5, 42));
                         //frame.remove(g2);
                         gamePanel.validate();
                         gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                        //gamePanel.setSize(1000, 601);
+                        gamePanel.setSize(1000, 601);
                         playSound("gameover.WAV");
                         gamePanel.setVisible(true);
                     }
@@ -119,21 +143,26 @@ gamePanel.setBackground( new Color(4, 5, 42));
                             pacman.move(37);
                             gameEngine.isGameOver(g1);
                             //  gameEngine.isGameOver(g2);        //ask gameEngine if it is a gameover
+                            scoringLabel.setText(score + "");
                             break;
                         case 38:       //fel nyil kodja
                             pacman.move(38);
                             gameEngine.isGameOver(g1);
                             //gameEngine.isGameOver(g2);
+                            scoringLabel.setText(score + "");
                             break;
                         case 39:       //jobb nyil kodja
                             pacman.move(39);
                             gameEngine.isGameOver(g1);
                             //gameEngine.isGameOver(g2);
+                            scoringLabel.setText(score + "");
                             break;
                         case 40:       //moving and turning south
                             pacman.move(40);
                             gameEngine.isGameOver(g1);
                             //gameEngine.isGameOver(g2);
+
+                            scoringLabel.setText(score + "");
                             break;
 
                         case (27):       //game over created by pressing "esc" button
@@ -142,7 +171,7 @@ gamePanel.setBackground( new Color(4, 5, 42));
                             //frame.remove(g2);
                             gamePanel.validate();
                             gamePanel.add(gameEngine.gameOver());     //redraw the frame with a game over logo
-                            gamePanel.setSize(800, 550);
+                            gamePanel.setSize(700, 550);
                             playSound("gameover.WAV");
                             gamePanel.setVisible(true);
                             break;

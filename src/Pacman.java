@@ -33,6 +33,7 @@ public class Pacman extends JLabel {
                     if ((((Dot) Window.frame.getContentPane().findComponentAt(this.getX() - 4, this.getY())).getText().equals("."))) {
                         Window.score += 10;
                         System.out.println(Window.score);
+
                     }
                     ((Dot) Window.frame.getContentPane().findComponentAt(this.getX() - 4, this.getY())).setText("");
 
