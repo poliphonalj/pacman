@@ -29,8 +29,9 @@ public class GameEngine {
     //tries to move the ghost towards to the pac.
     //this method calculate the distance of the ghost and pac and chose the best direction for the ghost
     //to minimalize this distance
-    public int moveGhost(Ghost g1) {
-        this.g1 = g1;
+    public void moveGhost(Ghost g1) {
+
+     this.g1 = g1;
 
         int pacX = (int) Pacman.pacLocation.getX();
         int pacY = (int) Pacman.pacLocation.getY();
@@ -43,27 +44,23 @@ public class GameEngine {
 
         //to ghost tries to chase down the pac
         //if the original distance gets less in case of moving then the motion to east>>>the ghost moves to east
-        if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() + 4, pointGhost.getY())) {   //west
-            return 1;
+        if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX() + 1, pointGhost.getY())) {   //west
+           // g1.move(1);
         }
 
-        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() - 4, pointGhost.getY())) {   //east
-            return 0;
+        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX() - 1, pointGhost.getY())) {   //east
+            //g1.move(0);
         }
 
-        else if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX(), pointGhost.getY() - 4)) {   //north
-            return 3;
+        else if (pointPac.distance(pointGhost) > pointPac.distance(pointGhost.getX(), pointGhost.getY() - 1)) {   //north
+            //g1.move(3);
         }
 
-        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX(), pointGhost.getY() + 4)) {   //south
-            return 2;
+        else if (pointPac.distance(pointGhost) >= pointPac.distance(pointGhost.getX(), pointGhost.getY() + 1 )) {   //south
+           //g1.move(2);
         }
-
-        else
-            // System.out.println("5");
-            //System.out.println(pointPac.distance(pointGhost));
-            return 0;
     }
+
 
 
 

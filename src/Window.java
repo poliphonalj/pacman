@@ -13,6 +13,8 @@ import java.awt.event.MouseListener;
 import java.io.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Window {
@@ -22,7 +24,7 @@ public class Window {
     static int score = 0;
 
     Pacman pacman;
-    Ghost g1;
+   static Ghost g1;
     GameEngine gameEngine;
 
     JPanel gameOverPanel = new JPanel();
@@ -33,8 +35,8 @@ public class Window {
     JLabel livesLabel = new JLabel();
     JLabel soundLabel = new JLabel();
     JLabel gameoverLabel = new JLabel();
-
     int soundFlag = 1;
+    Timer timer;
 
     public Window() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException, AWTException {
 
@@ -45,7 +47,7 @@ public class Window {
         pacman = new Pacman();
         gameEngine = new GameEngine();
 
-        g1 = new Ghost(352, 300, "red");
+        g1 = new Ghost(359, 220, "red");
         //Ghost g2 = new Ghost(673, 51, "blue");
 
         pacman.setBounds(33, 33, 30, 30);
@@ -107,6 +109,12 @@ public class Window {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //g1.move();
+
+
+
+
+
 
 
         frame.addKeyListener(new KeyListener() {
@@ -119,6 +127,7 @@ public class Window {
                 try {
                     switch (e.getKeyCode()) {
                         case 37:       //left arrow
+
                             pacman.move(37);
                             scoringLabel.setText(score + "");
                             switch (gameEngine.isCrash(g1)) {
@@ -151,6 +160,7 @@ public class Window {
                             break;
 
                         case 38:       //upp arrow
+
                             pacman.move(38);
                             scoringLabel.setText(score + "");
                             switch (gameEngine.isCrash(g1)) {
@@ -184,6 +194,7 @@ public class Window {
                             break;
 
                         case 39:       //right arrow
+
                             pacman.move(39);
                             scoringLabel.setText(score + "");
                             switch (gameEngine.isCrash(g1)) {
@@ -216,6 +227,7 @@ public class Window {
                             break;
 
                         case 40:       //down arrow
+
                             pacman.move(40);
                             scoringLabel.setText(score + "");
                             switch (gameEngine.isCrash(g1)) {
@@ -259,7 +271,7 @@ public class Window {
                         playSound("pacman_chomp.WAV");
                     }
 
-                    g1.move(gameEngine.moveGhost(g1));//this is the core of the program, moves the ghost to the suitable coorinates
+                    gameEngine.moveGhost(g1);//this is the core of the program, moves the ghost to the suitable coorinates
                     //g2.move(gameEngine.moveGhost(g2));//this is the core of the program, moves the ghost to the suitable coorinates
 
 

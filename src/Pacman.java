@@ -24,6 +24,7 @@ public class Pacman extends JLabel {
 
 
     public void move(int i) throws AWTException, IOException {
+        System.out.println(this.getX()+" "+getY());
         switch (i) {
             case 37:       //LEFT ARROW
 

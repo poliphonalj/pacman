@@ -3,87 +3,188 @@
 
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.*;
 
-public class Ghost extends JLabel {
+
+public class Ghost extends JLabel implements Runnable {
 
     public Ghost(int x, int y, String color) {
         super(new ImageIcon(color + "_Ghost.png"));
-        this.setSize(30, 30);
+        this.setSize(29, 29);
         this.setLocation(x, y);
+
+        Thread thread = new Thread(this);   //every ghosts has its own thread
+        thread.start();
     }
 
-    public void move(int i) {
-        Point p = new Point(this.getX(), this.getY());              //actual point of the position of the ghost
-
-        switch (i) {
-            case 0:                                              //east
-                if (this.getX() >= 781) {       //leaving the board on the right side and coming back from the left
-                    this.setLocation(-54, this.getY());
-                }
-
-                if ((Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY()) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 50) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 55, this.getY() + 25) instanceof Wall)
-                ) {
-                   // System.out.println("true its a wall");
-                } else {
-                    this.setLocation(new Point(p.x + 5, p.y));
-                }
-                if (this.getX() >= 699) {//leaving the board on the left side, coming back on the right
-                    this.setLocation(new Point(-40,246));
-
-                }
+    @Override
+    public void run() {
+        try {
+            move();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 
+    public void move() throws InterruptedException {
 
-                break;
+        for (int i = 0; i < 1000; i++) {
+            Random r = new Random();
+            int seged = r.nextInt(4);
 
-            case 1: //west
-
-                if ((Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY()) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 50) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() - 5, this.getY() + 25) instanceof Wall)
-                ) {
-                   // System.out.println("true its a wall");
-                    //System.out.println(this.getX()+"szellemx");
-                } else {//System.out.println("balra halado szellem x"+this.getLocation());
-                    this.setLocation(new Point(p.x - 5, p.y));
-                    //actualPoint=new Point(p.x , p.y);
-                    if (this.getX() <= 0) {//leaving the board on the left side, coming back on the right
-                        this.setLocation(new Point(700,246));
-
-                    }
-
-
+            switch (seged) {
+                case 0:
+                    felmegy();
                     break;
-                }
-
-            case 2:   //south
-
-                if ((Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() + 55) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() + 55) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() + 55) instanceof Wall)
-                ) {
-                   // System.out.println("true its a wall");
-                } else {
-                    this.setLocation(new Point(p.x, p.y + 5));
-                    //actualPoint=new Point(p.x , p.y);
+                case 1:
+                    lemegy();
                     break;
-                }
+                case 2:
+                    balramegy();
+                    break;
+                case 3:
+                    jobbramegy();
+                    break;
+            }
+        }
+    }
 
 
-            case 3:  //north
-                if ((Window.frame.getContentPane().findComponentAt(this.getX(), this.getY() - 5) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 50, this.getY() - 5) instanceof Wall) ||
-                        (Window.frame.getContentPane().findComponentAt(this.getX() + 25, this.getY() - 5) instanceof Wall)
-                ) {
-                   // System.out.println("true its a wall");
-                } else {
-                    this.setLocation(new Point(p.x, p.y - 5));
-                    //actualPoint=new Point(p.x , p.y);
-                }
+    public synchronized void felmegy() throws InterruptedException {
+        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() - 1) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() - 1) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() - 1) instanceof Wall)
+        )) {
+            this.setLocation(this.getX(), this.getY() - 1);
+            this.wait(30);
+        }
+    }
+
+    public synchronized void balramegy() throws InterruptedException {
+        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY()) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 30) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 15) instanceof Wall)
+        )) {
+            this.setLocation(this.getX() - 1, this.getY());
+            this.wait(30);
+        }
+    }
+
+    public synchronized void lemegy() throws InterruptedException {
+        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() + 31) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() + 31) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() + 31) instanceof Wall)
+        )) {
+            this.setLocation(this.getX(), this.getY() + 1);
+            this.wait(30);
+        }
+    }
+
+    public synchronized void jobbramegy() throws InterruptedException {
+        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY()) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 15) instanceof Wall) ||
+                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 30) instanceof Wall)
+        )) {
+            this.setLocation(this.getX() + 1, this.getY());
+            this.wait(30);
         }
     }
 }
+
+
+
+
+
+
+
+/*
+ ArrayList<Integer> generateDirArray = new ArrayList<>();    //contains the possible directions and choose one of them to step
+
+                //ha balra nincsfal
+                if (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY()) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 30) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 15) instanceof Wall)
+                )) {
+                    generateDirArray.add(0);
+                }
+
+                //ha jobbra nincs fal
+                if (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY()) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 30) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 15) instanceof Wall)
+                )) {
+                    generateDirArray.add(1);
+                }
+
+                // ha lefele nincs fal
+                if (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() + 31) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() + 31) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() + 31) instanceof Wall)
+                )) {
+                    generateDirArray.add(2);
+                }
+
+                //ha felfele nincs fal
+                if (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() - 1) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() - 1) instanceof Wall) ||
+                        (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() - 1) instanceof Wall)
+                )) {
+                    generateDirArray.add(3);
+                }
+
+                Collections.shuffle(generateDirArray);
+                int i = generateDirArray.get(0);
+                switch (i) {
+                    case 0: //balra lep
+                        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY()) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 30) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() - 1, Window.g1.getY() + 15) instanceof Wall)
+                        )) {
+                            Window.g1.setLocation(Window.g1.getX() - 1, Window.g1.getY());
+                        }
+                        break;
+                    case 1://jobbra lep
+                        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY()) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 30) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 31, Window.g1.getY() + 15) instanceof Wall)
+                        )) {
+                            Window.g1.setLocation(Window.g1.getX() + 1, Window.g1.getY());
+                        }
+                        break;
+                    case 2://lefele
+                        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() + 31) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() + 31) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() + 31) instanceof Wall)
+                        )) {
+                            Window.g1.setLocation(Window.g1.getX(), Window.g1.getY() + 1);
+                        }
+                        break;
+                    case 3://felfele
+                        while (!((Window.frame.getContentPane().findComponentAt(Window.g1.getX(), Window.g1.getY() - 1) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 30, Window.g1.getY() - 1) instanceof Wall) ||
+                                (Window.frame.getContentPane().findComponentAt(Window.g1.getX() + 15, Window.g1.getY() - 1) instanceof Wall)
+                        )) {
+                            Window.g1.setLocation(Window.g1.getX(), Window.g1.getY());
+                        }
+                }
+            }
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
