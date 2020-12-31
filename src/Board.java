@@ -64,6 +64,8 @@ public class Board {
             array.add(new Wall(i * 32 + 352, 96));
         }
 
+        array.add(new Wall(448, 192));
+
         array.add(new Wall(576, 128));
         array.add(new Wall(576, 160));
 

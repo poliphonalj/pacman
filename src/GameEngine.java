@@ -65,9 +65,9 @@ public class GameEngine {
 
 
     //this method runs if the pac and ghost are crashing eachother
-    public int isCrash(Ghost g1) {
+    public int isCrash(Ghost g1, Ghost g2) {
         //in case of a collision, we have to remove one life, and set the ghost and pac back to starter position, until the last life, after it the gameover comes
-        if ((Math.abs(Pacman.pacLocation.getX() - g1.getX()) < 30) && (Math.abs(Pacman.pacLocation.getY() - g1.getY()) < 30)) {
+        if (((Math.abs(Pacman.pacLocation.getX() - g1.getX()) < 30) && (Math.abs(Pacman.pacLocation.getY() - g1.getY()) < 30)) || ((Math.abs(Pacman.pacLocation.getX() - g2.getX()) < 30) && (Math.abs(Pacman.pacLocation.getY() - g2.getY()) < 30))){
            lifeFlag--;
            return lifeFlag;
         }

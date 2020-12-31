@@ -25,6 +25,7 @@ public class Window {
 
     Pacman pacman;
    static Ghost g1;
+   static Ghost g2;
     GameEngine gameEngine;
 
     JPanel gameOverPanel = new JPanel();
@@ -47,8 +48,10 @@ public class Window {
         pacman = new Pacman();
         gameEngine = new GameEngine();
 
-        g1 = new Ghost(359, 220, "red");
-        //Ghost g2 = new Ghost(673, 51, "blue");
+        g1 = new Ghost(352, 240, "red");
+        g2 = new Ghost(352, 200, "blue");
+g1.setBounds(352,220,30,30);
+        g2.setBounds(352,220,30,30);
 
         pacman.setBounds(33, 33, 30, 30);
 
@@ -60,8 +63,8 @@ public class Window {
         gamePanel.setLayout(null);
         gamePanel.add(pacman);
         gamePanel.add(g1);
+        gamePanel.add(g2);
 
-        // frame.add(g2);
 
 
         for (int i = 0; i < wallList.size(); i++) {             //drawing the board items from an arrayList
@@ -130,7 +133,7 @@ public class Window {
 
                             pacman.move(37);
                             scoringLabel.setText(score + "");
-                            switch (gameEngine.isCrash(g1)) {
+                            switch (gameEngine.isCrash(g1,g2)) {
                                 case 2:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
@@ -139,6 +142,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 1:
@@ -149,6 +153,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 0:
@@ -163,7 +168,7 @@ public class Window {
 
                             pacman.move(38);
                             scoringLabel.setText(score + "");
-                            switch (gameEngine.isCrash(g1)) {
+                            switch (gameEngine.isCrash(g1,g2)) {
                                 case 2:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
@@ -172,6 +177,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 1:
@@ -182,6 +188,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 0:
@@ -197,7 +204,7 @@ public class Window {
 
                             pacman.move(39);
                             scoringLabel.setText(score + "");
-                            switch (gameEngine.isCrash(g1)) {
+                            switch (gameEngine.isCrash(g1,g2)) {
                                 case 2:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
@@ -206,6 +213,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 1:
@@ -216,6 +224,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 0:
@@ -230,7 +239,7 @@ public class Window {
 
                             pacman.move(40);
                             scoringLabel.setText(score + "");
-                            switch (gameEngine.isCrash(g1)) {
+                            switch (gameEngine.isCrash(g1,g2)) {
                                 case 2:
                                     if (!(soundFlag % 2 == 0)) {
                                         playSound("gameover.WAV");
@@ -239,6 +248,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives2.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 1:
@@ -249,6 +259,7 @@ public class Window {
                                     livesLabel.setIcon(new ImageIcon("lives1.png"));
                                     pacman.setLocation(new Point(33, 33));
                                     g1.setLocation(352,300);
+                                    g2.setLocation(352,300);
                                     break;
 
                                 case 0:
@@ -272,6 +283,7 @@ public class Window {
                     }
 
                     gameEngine.moveGhost(g1);//this is the core of the program, moves the ghost to the suitable coorinates
+                    //gameEngine.moveGhost(g2);
                     //g2.move(gameEngine.moveGhost(g2));//this is the core of the program, moves the ghost to the suitable coorinates
 
 
@@ -325,6 +337,7 @@ public class Window {
     public void showGameOver() throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
         gamePanel.remove(pacman);
         gamePanel.remove(g1);
+        gamePanel.remove(g2);
         frame.remove(gamePanel);
         frame.remove(sidePanel);
 
