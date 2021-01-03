@@ -152,4 +152,8 @@ public class Pacman extends JLabel {
                 }
         }
     }
+
+    public  Point getPacLocation() {
+        return pacLocation;
+    }
 }
